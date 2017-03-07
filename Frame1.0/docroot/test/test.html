@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://geek.csdn.net/news/detail/94003 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+    <link href="http://csdnimg.cn/public/favicon.ico" rel="GEEK ICON">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<title>携程App网络服务通道治理和性能优化  - 极客头条  - CSDN.NET</title>
+	<link rel="stylesheet" href="./test_files/index.css">
+	<link rel="stylesheet" href="./test_files/font-awesome.min.css">
+	<link rel="stylesheet" href="./test_files/bootstrap.min.css">
+	<!--	-->
+    <link rel="stylesheet" href="./test_files/geek.css">
+    <link rel="stylesheet" href="./test_files/comments.css">
+	<script src="./test_files/jquery-2.1.3.min.js"></script>
+	<script src="./test_files/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./test_files/comments.js"></script>
+        <script type="text/javascript" src="./test_files/rails.js"></script>
+    <script type="text/javascript" src="./test_files/jquery.pjax.js"></script>
+    <script type="text/javascript" src="./test_files/geek.js"></script>
+    <script type="text/javascript" src="./test_files/complaints.js"></script>
+		<script src="http://ads.csdn.net/js/tracking.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="./test_files/comments.css"><link rel="stylesheet" type="text/css" href="./test_files/style.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="main" src="./test_files/main.js"></script><link type="text/css" rel="stylesheet" href="./test_files/style(1).css"><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link rel="stylesheet" href="./test_files/share_style2_32.css"><link type="text/css" rel="stylesheet" href="./test_files/default.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+	skipStartupTypeset: true,
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: [
+            "STIX",
+            "TeX"
+        ],
+        linebreaks: {
+            automatic: true
+        },
+        EqnChunk: 10,
+        imageFont: null
+    },
+    tex2jax: { inlineMath: [["$","$"],["\\\\(","\\\\)"]], displayMath: [["$$","$$"],["\\[","\\]"]], processEscapes: true },
+    TeX: $.extend({
+        noUndefined: {
+            attributes: {
+                mathcolor: "red",
+                mathbackground: "#FFEEEE",
+                mathsize: "90%"
+            }
+        },
+        Safe: {
+            allow: {
+                URLs: "safe",
+                classes: "safe",
+                cssIDs: "safe",
+                styles: "safe",
+                fontsize: "all"
+            }
+        }
+    }, undefined),
+    messageStyle: "none"
+});
+</script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mathjax" src="./test_files/MathJax.js"></script></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+
+<!--[if gte IE 8]>
+    <script src="http://c.csdnimg.cn/cdn/201502/js/jquery-1.11.2.min.js"></script>
+    <div class="fuckie8"><p>我梭这位藤姿，啄为一锅极咳，用辣摸古董滴牛懒气是不对的。<br>盖绍你克<a target="_blank" href="http://www.firefox.com.cn">这里</a>下锅火府（firefox）装上嘛，蛮好用嘞。</p>
+            <h5>三观正的说法：</h5>
+            <h6>您当前使用的浏览器版本过低，推荐使用最新版<a target="_blank" href="http://www.firefox.com.cn">Firefox</a>或<a>Chrome</a>以获得最佳浏览体验。</h6>
+    </div>
+<![endif]-->
+	<script id="toolbar-tpl-scriptId" prod="" skin="black" fixed="true" src="./test_files/html.js"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://geek.csdn.net/?ref=toolbar_logo" class="img none"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="http://passport.csdn.net/account/mobileregister?ref=toolbar&amp;action=mobileRegister">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="./test_files/saved_resource.html" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix" style="display:none;"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt style="border: none;"><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./test_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./test_files/100x100.jpg"></a></dt>                        <dd class="info" style="border: none;"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-left" style="margin-left:132px; width:18px; height:27px; white-space:nowrap; overflow:hidden;"><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div id="chasnew123" class="hasnew" style="display: none;"></div>                <div id="cappsarea123" class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd> <a href="http://lib.csdn.net/?ref=toolbar" target="_blank">知识库</a></dd>                      <dd><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">技术问答</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                      <dd style="display:none"> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd style="display:none"> <a href="http://job.csdn.net/?ref=toolbar" target="_blank">JOB<img src="./test_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="http://edu.csdn.net/?ref=toolbar" target="_blank">学院<img src="./test_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                      <dd> <a href="http://mall.csdn.net/?ref=toolbar" target="_blank">C币兑换<img src="./test_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+<img id="share_weixin" src="./test_files/geek_logo.png">
+	<ul class="header_mini visible-phone list-unstyled">
+        <li><i class="fa fa-align-justify"></i> </li>
+        <li><a href="http://geek.csdn.net/">极客头条</a> </li>
+        <li>
+            <a href="http://geek.csdn.net/search" title="搜索"><i class="fa fa-search"></i></a>
+            <a data-target="geek_link" class="start_cmmde" title="发布链接"><i class="fa fa-link"></i></a>
+            <a data-target="geek_new" class="start_cmmde" title="发布图文"><i class="fa fa-file-text-o"></i></a>
+        </li>
+    </ul>
+    	<script type="text/javascript">var login_username = "";</script>
+    <div class="left_nav_top hide_lg">
+    <span class="toggle-subnav insubnav"><i class="fa fa-arrow-left"></i>返回</span>
+            <a href="https://passport.csdn.net/account/login" class="visible-xs">登录</a>
+        <!--<a onclick="return_old()">返回老版</a>-->
+</div>
+<script>
+    function return_old(){
+        $.get("/hackernewsv2/taste",function(data){
+            if(data.succ == 1){
+                window.location.href="http://geek.csdn.net/";
+            }else{
+                alert(data.msg);
+                return false;
+            }
+        })
+    }
+</script>
+<div class="left_nav hide_lg">
+    <div class="scroller_box">
+        <div id="leftnav_scr" class="scroller_body">
+            <div class="scroller_cont" style="left: 0px; top: 0px;">
+                <!--申请创建主题-->
+<!--申请创建主题弹框-->
+<div class="mark mark_apply_create hide">
+    <div class="popup">
+        <h1><span>申请创建主题</span><span class="tips create_forum_error"></span><i class="fa fa-close close"></i></h1>
+        <div class="popup_wrap">
+            <!--申请创建主题第一步未选中-->
+            <div class="popup_c" style="display: none;">
+                <div class="popup_c_first">
+                    <p>主题创建协议：</p>
+                    <p>
+					主题是聚焦特定技术文章的讨论小组，在这里，你可以与志同道合的伙伴畅所欲言。假如极客头条的读者关注或者加入了你所创建的主题，他们能在主题中发表内容，同时在自己的看板中，浏览这里的发言。主题中的精华内容，也可以为极客头条所有的用户看到。
+</p>
+<p>
+申请创建主题之前，请先思考下面的问题：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1.	创建主题之后，你是否愿意投入精力建设和管理社区？如果你尚在犹豫，或者怀疑自己的热情，可能意味着你还需要等待一段时间。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2.	你是否能找到一群志趣相投的朋友？每个主题都需要一群与你相似，能与你找到共鸣的朋友。<br>
+</p>
+<p>
+如果对上面的问题，你都有肯定的回答，那么欢迎创建主题。
+					
+					</p>
+                    <div class="popup_c_first_b">
+                        <div class="pull-left">
+                            <label><input type="checkbox" class="accept" id="accept"> 接受</label>
+<!--                        	<i><input type="checkbox" class="reject"/></i><span>不接</span>-->
+                        </div>
+                        <div class="pull-right"><input type="button" href="javascript:;" class="next_01" id="next" value="下一步"></div>
+
+                    </div>
+                </div>
+            </div>
+            <!--申请创建主题第二步-->
+            <div class="popup_c" style="display: none;">
+
+				<form class="form-horizontal create_forum_form">
+
+                    <ul class="popup_list">
+                        <li><h3 class="forum_message">主题信息（必填）</h3></li>
+                        <li><label>主题名称</label><input class="input_forum_name" type="text" name="forum[name]"></li>
+                        <li class="dashed_b">
+                            <div class="intro">主题描述（最多限制在50个字符）</div>
+                            <textarea class="input_forum_describe" required="required" name="forum[description]"></textarea>
+                        </li>
+                        <li><h3>申请人信息（必填）</h3></li>
+                        <li><label>姓名</label><input type="text" name="userinfo[name]" value=""></li>
+                        <li><label>公司</label><input type="text" name="userinfo[company]" value=""> </li>
+                        <li><label>职位</label><input type="text" required="required" name="userinfo[job]" value=""> </li>
+                        <li><label>邮箱</label><input type="email" required="required" name="userinfo[email]" value=""> </li>
+                        <li><label>手机号</label><input type="tel" required="required" name="userinfo[mobile]" value=""> </li>
+
+                    </ul>
+                    <div class="submit_b"><button class="submit create_forum_submit">提交</button></div>
+                </form>
+            </div>
+            <!--申请创建主题第三步-->
+            <div class="popup_c" style="display: none;">
+                <div class="popup_c_third">
+                    <p>申请信息已提交审核，请注意查收邮件，我们会尽快给您反馈。</p>
+                    <p>如有疑问，请联系<a href="mailto:geek@csdn.net">geek@csdn.net</a></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function()
+    {
+        //取消背景层的滚动条滚动样式
+        /*$(document).css(
+            {"overflow":"none","overflow":"hidden","_overflow":"hidden","padding":"0 17px 0 0"}
+        );*/
+
+        $('#accept').removeAttr('checked');
+        
+        //申请创建主题弹框
+        $('body').delegate('.apply_CreatF', 'click', function()
+        {
+            var login_username = '';
+            var cookie = document.cookie.split(";");
+            for (var i in cookie){
+                var val = cookie[i];
+				var tmp = val.split('=');
+				if (tmp[0].trim() == 'UserName'){
+					login_username = tmp[1];
+				}
+            }
+        	if (login_username == ''){
+				location.href = "https://passport.csdn.net/account/login";
+            }
+        	$(".mark_apply_create").appendTo('body').removeClass("hide").fadeIn(100);
+        	$(".mark_apply_create").find(".popup_c:eq(0)").show().siblings().hide();
+
+        });
+
+        $("body").delegate('#accept', 'click', function()
+        {
+            checkState();
+            document.documentElement.style.cssText = 'overflow:none;+overflow:hidden;_overflow:hidden;';
+            document.body.style.cssText = 'overflow:hidden;+overflow:none;_overflow:none;padding:0 17px 0 0;';
+        });
+
+        //提交创建主题
+        $('body').delegate('.create_forum_submit', 'click', function(){
+            var tel = $(".popup_list input[type='tel']").val();
+            if($('.input_forum_name').val().trim() == ""){
+                $('.create_forum_error').html('请填写主题名称').show();
+                $('.input_forum_name').focus();
+            }else if($('.input_forum_describe').val().trim() == ""){
+                $('.create_forum_error').html('请填写主题描述').show();
+                $('.input_forum_describe').focus();
+            //}else if(/^13\d{9}$/g.test(tel)||(/^15[8,9]\d{8}$/g.test(tel)||(/^15[8,9]\d{8}$/g.test(tel))
+            }else if(/^1[3||5||8]\d{9}$/g.test(tel))
+            {
+                $(this).attr("disabled", "disabled");
+                var data = $('.create_forum_form').serialize();
+                $.post("/forum/create", data, function(result){
+                    if(result.status){
+                        $('.create_forum_error').hide();
+                        $(".mark_apply_create").find(".popup_c:eq(2)").show().siblings().hide();
+                    } else{
+                        $('.create_forum_submit').attr("disabled", false);
+                        $('.create_forum_error').html(result.error).show();
+                    }
+                });
+            }
+            else
+            {
+                $('.create_forum_error').html('请填写正确的手机号').show();
+                $(".popup_list input[type='tel']").focus();
+            }
+			return false;
+        });
+        
+        //状态检查
+        function checkState()
+        {
+            var flag = false;
+            var isCheck = $("#accept").prop("checked");
+            if(isCheck != null && isCheck == true)
+            {
+                flag = true;
+
+            }
+            if(flag)
+            {
+            	$('#next').removeAttr("disabled").addClass("next_02");
+                $('body').delegate('#next', 'click', function()
+                {
+                    $(".mark_apply_create").find(".popup_c:eq(1)").show().siblings().hide();
+
+                });
+            }
+            else
+            {
+                $('#next').attr("disabled",true).removeClass('next_02');
+            }
+            //alert(flag);
+
+        };
+
+
+        $("body").delegate('.close', 'click', function()
+        {
+        	$(".mark_apply_create").addClass("hide");
+            document.documentElement.style.cssText = '';
+            document.body.style.cssText = '';
+        });
+        
+    });
+</script>
+<script src="./test_files/follow_forum.js"></script>
+<div class="subnav">
+    <div class="apply_box hidden-xs">
+        <div class="apply_creat"><i class="fa fa-plus"></i><a href="javascript:;" class="apply_CreatF">申请创建主题</a> </div>
+        <!-- 申请创建主题弹出层 -->
+    </div>
+                        <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/55"><img src="./test_files/f2UWwMmGZz143528624529.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/55">IoT</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        327                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="55">749052</span>
+                        <a nodetype="followForum" nodeforum="55" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/50"><img src="./test_files/sGZXqI2zgH143522572826.jpeg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/50">潜水猿</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        288                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="50">742223</span>
+                        <a nodetype="followForum" nodeforum="50" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/14"><img src="./test_files/dsJwXit5na143591850915.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/14">全栈工程师</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        2628                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="14">739963</span>
+                        <a nodetype="followForum" nodeforum="14" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/48"><img src="./test_files/rv8p1iMnu0143521724486.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/48">Spark</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        370                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="48">738382</span>
+                        <a nodetype="followForum" nodeforum="48" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/33"><img src="./test_files/DK3tvRoLO4143521864683.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/33">PrestoDB</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        22                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="33">738084</span>
+                        <a nodetype="followForum" nodeforum="33" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/65"><img src="./test_files/5P3t8ColM6143773109169.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/65">Android开发者</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        4004                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="65">731112</span>
+                        <a nodetype="followForum" nodeforum="65" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/8"><img src="./test_files/CtrcOjGBpS143349656673.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/8">Rust</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        146                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="8">728643</span>
+                        <a nodetype="followForum" nodeforum="8" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/66"><img src="./test_files/YkV2WnTohM144888044066.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/66">iOS开发</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        1339                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="66">726723</span>
+                        <a nodetype="followForum" nodeforum="66" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/70"><img src="./test_files/JazGbfYED5143813961569.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/70">AngularJS</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        112                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="70">719839</span>
+                        <a nodetype="followForum" nodeforum="70" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/71"><img src="./test_files/xIcAvHDzOR144888088736.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/71">Grails/Groovy</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        7                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="71">716941</span>
+                        <a nodetype="followForum" nodeforum="71" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/43"><img src="./test_files/P0lOrYmAtj143530583856.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/43">人工智能</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        1269                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="43">716501</span>
+                        <a nodetype="followForum" nodeforum="43" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/68"><img src="./test_files/J3VSGmvd74143813447354.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/68">Python开发者</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        976                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="68">715982</span>
+                        <a nodetype="followForum" nodeforum="68" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/12"><img src="./test_files/O1FNR4yTXm143356797280.jpeg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/12">Swift</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        605                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="12">712744</span>
+                        <a nodetype="followForum" nodeforum="12" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/53"><img src="./test_files/geuDfP5zHN143528378479.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/53">Container</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        1048                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="53">710919</span>
+                        <a nodetype="followForum" nodeforum="53" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/73"><img src="./test_files/XDZUh21zpG143859109622.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/73">Git教程</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        425                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="73">708276</span>
+                        <a nodetype="followForum" nodeforum="73" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/67"><img src="./test_files/avR5Ks1uLc143762009993.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/67">Nodejs</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        128                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="67">694640</span>
+                        <a nodetype="followForum" nodeforum="67" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/78"><img src="./test_files/pIbAKtaEh5144893349940.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/78">C#极客区</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        108                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="78">686608</span>
+                        <a nodetype="followForum" nodeforum="78" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/1"><img src="./test_files/awG5LZABlv143523199429.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/1">GEEKNEWS</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        22509                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="1">686227</span>
+                        <a nodetype="followForum" nodeforum="1" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/63"><img src="./test_files/kthxrEHsGf143773248348.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/63">虚拟现实</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        712                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="63">676904</span>
+                        <a nodetype="followForum" nodeforum="63" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/80"><img src="./test_files/RObpn026Sy144888026019.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/80">微信开发</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        118                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="80">675777</span>
+                        <a nodetype="followForum" nodeforum="80" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/83"><img src="./test_files/0XxaDS1Wc9144893533149.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/83">架构</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        1491                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="83">674832</span>
+                        <a nodetype="followForum" nodeforum="83" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/123"><img src="./test_files/nHt7vSkKB6144893604348.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/123">计算机视觉</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        166                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="123">669134</span>
+                        <a nodetype="followForum" nodeforum="123" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/75"><img src="./test_files/oZnFATPDqj144888033927.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/75">Go</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        554                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="75">667974</span>
+                        <a nodetype="followForum" nodeforum="75" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/116"><img src="./test_files/cOkrXyNJBE144893581816.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/116">网络基础</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        286                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="116">664347</span>
+                        <a nodetype="followForum" nodeforum="116" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/79"><img src="./test_files/Rl6AKn1ac7144189314736.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/79">.NET</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        636                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="79">663427</span>
+                        <a nodetype="followForum" nodeforum="79" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/121"><img src="./test_files/OyWbxCuKlV144887231285.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/121">Visual Studio</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        112                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="121">661755</span>
+                        <a nodetype="followForum" nodeforum="121" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/117"><img src="./test_files/cXjby5u4BR144887277714.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/117">Sublime Text</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        45                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="117">661291</span>
+                        <a nodetype="followForum" nodeforum="117" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/125"><img src="./test_files/SFZlvItHnO144893635080.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/125">数据科学</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        647                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="125">660917</span>
+                        <a nodetype="followForum" nodeforum="125" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/77"><img src="./test_files/4AQmuEIgrn143928858133.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/77">CSDN PHPer</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        1                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="77">657479</span>
+                        <a nodetype="followForum" nodeforum="77" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/58"><img src="./test_files/mglGeRV7CX143564737199.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/58">安全</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        871                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="58">657326</span>
+                        <a nodetype="followForum" nodeforum="58" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/127"><img src="./test_files/opMWAyzR7c144893628039.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/127">算法</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        681                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="127">656374</span>
+                        <a nodetype="followForum" nodeforum="127" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/76"><img src="./test_files/logo.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/76">CSDN前端</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        2                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="76">654593</span>
+                        <a nodetype="followForum" nodeforum="76" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/114"><img src="./test_files/0q7Cd3IxtM144887898794.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/114">Nginx</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        114                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="114">654220</span>
+                        <a nodetype="followForum" nodeforum="114" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/108"><img src="./test_files/nUASPaEXqp144887960765.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/108">Redis</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        151                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="108">652706</span>
+                        <a nodetype="followForum" nodeforum="108" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/113"><img src="./test_files/J6cOox4gzZ144887885791.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/113">Windows</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        451                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="113">652205</span>
+                        <a nodetype="followForum" nodeforum="113" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/109"><img src="./test_files/LWa7ZDQT1b144887966086.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/109">Vim</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        229                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="109">652059</span>
+                        <a nodetype="followForum" nodeforum="109" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/107"><img src="./test_files/JgplKCNEFy144887946436.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/107">MongoDB</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        138                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="107">646583</span>
+                        <a nodetype="followForum" nodeforum="107" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/105"><img src="./test_files/y0xnvmTC68144887925720.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/105">MySQL</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        479                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="105">644077</span>
+                        <a nodetype="followForum" nodeforum="105" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/49"><img src="./test_files/V9QCwvrkmp143529794467.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/49">云计算</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        806                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="49">640144</span>
+                        <a nodetype="followForum" nodeforum="49" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/112"><img src="./test_files/4a3shubIQr144887892187.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/112">Hadoop</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        233                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="112">639431</span>
+                        <a nodetype="followForum" nodeforum="112" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/119"><img src="./test_files/hqlYd32sHF144887255623.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/119">Storm</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        38                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="119">635638</span>
+                        <a nodetype="followForum" nodeforum="119" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/103"><img src="./test_files/elgTq24ydV144893567137.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/103">C/C++</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        2556                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="103">634773</span>
+                        <a nodetype="followForum" nodeforum="103" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/99"><img src="./test_files/YS4bLTEk5e144887270717.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/99">JavaScript</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        973                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="99">626073</span>
+                        <a nodetype="followForum" nodeforum="99" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/118"><img src="./test_files/ehU21L9FO3144887294948.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/118">Eclipse</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        62                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="118">625215</span>
+                        <a nodetype="followForum" nodeforum="118" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/87"><img src="./test_files/Hp21VOIYxh144349348582.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/87">程序人生</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        7667                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="87">624741</span>
+                        <a nodetype="followForum" nodeforum="87" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/47"><img src="./test_files/OMkpa72H4l143571748832.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/47">前端</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        2197                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="47">623238</span>
+                        <a nodetype="followForum" nodeforum="47" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/94"><img src="./test_files/leyM3b7PDX144552199390.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/94">PHP开发者</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        592                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="94">616287</span>
+                        <a nodetype="followForum" nodeforum="94" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/100"><img src="./test_files/OmLoMva03H144893435334.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/100">React</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        126                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="100">614323</span>
+                        <a nodetype="followForum" nodeforum="100" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/93"><img src="./test_files/70LD5BHumn144540767390.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/93">Java</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        4000                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="93">605820</span>
+                        <a nodetype="followForum" nodeforum="93" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/133"><img src="./test_files/17TajP3OBy145094931568.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/133">大数据</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        94                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="133">596280</span>
+                        <a nodetype="followForum" nodeforum="133" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/131"><img src="./test_files/Emn8zLwWkX145094569094.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/131">数据库</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        338                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="131">593031</span>
+                        <a nodetype="followForum" nodeforum="131" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/132"><img src="./test_files/7eNgVqDI2T145094637245.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/132">移动开发</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        124                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="132">592362</span>
+                        <a nodetype="followForum" nodeforum="132" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/102"><img src="./test_files/5U9w8lJIQs144887307264.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/102">jQuery</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        483                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="102">588429</span>
+                        <a nodetype="followForum" nodeforum="102" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/122"><img src="./test_files/Dpz9hok4KF144663586247.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/122">Toolwith</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        47                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="122">584429</span>
+                        <a nodetype="followForum" nodeforum="122" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/95"><img src="./test_files/Zg24kemEyq144556413185.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/95">Linux/UNIX</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        1285                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="95">580060</span>
+                        <a nodetype="followForum" nodeforum="95" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/101"><img src="./test_files/dehwco7GqS144887299954.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/101">Bootstrap</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        95                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="101">578681</span>
+                        <a nodetype="followForum" nodeforum="101" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/57"><img src="./test_files/F620rACS3G143556662298.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/57">SDN</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        265                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="57">574568</span>
+                        <a nodetype="followForum" nodeforum="57" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/89"><img src="./test_files/BUqe9bJ6g1144533339489.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/89">智能硬件</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        272                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="89">571677</span>
+                        <a nodetype="followForum" nodeforum="89" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/97"><img src="./test_files/ltzpoHYnJd144893645240.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/97">HTML/H5</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        673                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="97">567252</span>
+                        <a nodetype="followForum" nodeforum="97" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/106"><img src="./test_files/Acob4WC0kD144887938719.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/106">PostgreSQL</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        82                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="106">557646</span>
+                        <a nodetype="followForum" nodeforum="106" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/98"><img src="./test_files/yR3kKEAzg8144893651210.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/98">CSS/CSS3</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        758                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="98">552365</span>
+                        <a nodetype="followForum" nodeforum="98" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/61"><img src="./test_files/logo.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/61">技术翻译</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        0                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="61">540701</span>
+                        <a nodetype="followForum" nodeforum="61" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/129"><img src="./test_files/3SXOktwzbe145076477620.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/129">TensorFlow </a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        28                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="129">524489</span>
+                        <a nodetype="followForum" nodeforum="129" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/17"><img src="./test_files/MNRWjc3wap143392727868.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/17">/home</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        56                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/134"><img src="./test_files/logo.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/134">行业动态</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        38                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="134">498848</span>
+                        <a nodetype="followForum" nodeforum="134" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/120"><img src="./test_files/XcaeA5rg8H144887241492.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/120">Tomcat</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        53                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="120">436175</span>
+                        <a nodetype="followForum" nodeforum="120" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/115"><img src="./test_files/RH43SehVqx144893497922.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/115">敏捷开发</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        153                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="115">430883</span>
+                        <a nodetype="followForum" nodeforum="115" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/111"><img src="./test_files/T15Ddalr0y144887971582.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/111">Emacs</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        25                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="111">422611</span>
+                        <a nodetype="followForum" nodeforum="111" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/142"><img src="./test_files/igZDstqBhu145638672349.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/142">程序员书屋</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        37                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="142">416626</span>
+                        <a nodetype="followForum" nodeforum="142" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/104"><img src="./test_files/sw2PQYAE19144887910085.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/104">Ruby</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        95                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="104">405874</span>
+                        <a nodetype="followForum" nodeforum="104" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/90"><img src="./test_files/GBACN43JhL144524844259.png"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/90">Blender</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        32                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="90">385810</span>
+                        <a nodetype="followForum" nodeforum="90" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/136"><img src="./test_files/logo.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/136">OpenStack</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        86                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="136">341108</span>
+                        <a nodetype="followForum" nodeforum="136" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/137"><img src="./test_files/WnVhDUa0bB145386007798.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/137">CTO俱乐部</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        58                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="137">329451</span>
+                        <a nodetype="followForum" nodeforum="137" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/152"><img src="./test_files/Ds2ij9pdE8146252023068.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/152">Bluemix</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        160                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="152">241230</span>
+                        <a nodetype="followForum" nodeforum="152" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/151"><img src="./test_files/logo.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/151">信息无障碍</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        58                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="151">237317</span>
+                        <a nodetype="followForum" nodeforum="151" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/154"><img src="./test_files/logo.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/154">Linux系统技术</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        0                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="154">101652</span>
+                        <a nodetype="followForum" nodeforum="154" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/156"><img src="./test_files/logo.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/156">软件测试</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        3                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="156">76931</span>
+                        <a nodetype="followForum" nodeforum="156" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+                    <dl class="forum_list">
+                <dt><a href="http://geek.csdn.net/forum/155"><img src="./test_files/logo.jpg"></a></dt>
+                <dd>
+                    <h4><a href="http://geek.csdn.net/forum/155">微服务</a></h4>
+                    <p>
+                         <i class="fa fa-file-text" title="文章数"></i>
+                        6                                                <i class="fa fa-users" title="关注人数"></i> 
+                        <span forum-follows="155">0</span>
+                        <a nodetype="followForum" nodeforum="155" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                  			</p>
+                </dd>
+            </dl>
+            
+</div>
+
+
+<script type="text/javascript">
+    $(function(){
+        showFollowForum();
+    });
+</script>                <div class="defaultnav">
+                    
+                    <ul class="nav_bar list-unstyled">
+                    	                    	                        <li class="site_name" title="GEEK头条，人人都是主编">
+</li>
+<li>
+        <!--发表链接、发表主题、搜索-->
+    <div class="pub_to">
+        <div class="to_pub">
+            <a data-target="geek_link" class="start_cmmde"><i class="fa fa-link"></i><span>发布链接</span></a>
+            <a data-target="geek_new" class="start_cmmde"><i class="fa fa-file-text-o"></i><span>发布图文</span></a>
+        </div>
+        <div class="search_l">
+				            <span>
+				                <i id="search_nav" class="fa fa-search"></i>
+				            </span>
+            <input id="keyword" type="text" placeholder="搜索">
+        </div>
+    </div>
+</li>
+<li><span class="toggle-subnav">全部主题</span> </li>
+<li><span>热门主题</span> <i class="fa fa-angle-down"></i>
+                <dl class="hot_forum">
+                        <a href="http://geek.csdn.net/forum/55" title="IoT， 327 篇文章，749052人关注"><img src="./test_files/f2UWwMmGZz143528624529(1).jpg"></a>
+
+                        <a href="http://geek.csdn.net/forum/50" title="潜水猿， 288 篇文章，742223人关注"><img src="./test_files/sGZXqI2zgH143522572826(1).jpeg"></a>
+
+                        <a href="http://geek.csdn.net/forum/14" title="全栈工程师， 2628 篇文章，739963人关注"><img src="./test_files/dsJwXit5na143591850915(1).png"></a>
+
+                        <a href="http://geek.csdn.net/forum/48" title="Spark， 370 篇文章，738382人关注"><img src="./test_files/rv8p1iMnu0143521724486(1).png"></a>
+
+                        <a href="http://geek.csdn.net/forum/33" title="PrestoDB， 22 篇文章，738084人关注"><img src="./test_files/DK3tvRoLO4143521864683(1).jpg"></a>
+
+                    </dl>
+    </li>                        						                                <li class="contribution"><span>贡献榜</span><a target="_blank" href="http://geek.csdn.net/rank" class="all">全部</a><i class="fa fa-angle-down"></i>
+                    <dl>
+                <dt><a href="http://geek.csdn.net/user/publishlist/u010850027" target="_blank"><img src="./test_files/2_u010850027.jpg" class="avatar"></a></dt>
+                <dd>
+					<a title="u010850027" class="user_name" href="http://geek.csdn.net/user/publishlist/u010850027" target="_blank">丁国华</a>
+                                            <a nodetype="followUser" nodeuser="u010850027" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                        <p>傻丫头和高科技产物小心翼翼的初恋</p>
+                </dd>
+            </dl>
+                    <dl>
+                <dt><a href="http://geek.csdn.net/user/publishlist/xmt1139057136" target="_blank"><img src="./test_files/2_xmt1139057136.jpg" class="avatar"></a></dt>
+                <dd>
+					<a title="xmt1139057136" class="user_name" href="http://geek.csdn.net/user/publishlist/xmt1139057136" target="_blank">业余草</a>
+                                            <a nodetype="followUser" nodeuser="xmt1139057136" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                        <p>如今的编程是一场程序员和上帝的竞赛，程序员要开发出更大更好、傻瓜都会用到软件。而上帝在努力创造出更大更傻的傻瓜。目前为止，上帝是赢的。个人网站：www.xttblog.com。个人QQ群：135430763、454796847</p>
+                </dd>
+            </dl>
+                    <dl>
+                <dt><a href="http://geek.csdn.net/user/publishlist/u010786678" target="_blank"><img src="./test_files/2_u010786678.jpg" class="avatar"></a></dt>
+                <dd>
+					<a title="u010786678" class="user_name" href="http://geek.csdn.net/user/publishlist/u010786678" target="_blank">任焱</a>
+                                            <a nodetype="followUser" nodeuser="u010786678" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                        <p>编程小菜鸟</p>
+                </dd>
+            </dl>
+                    <dl>
+                <dt><a href="http://geek.csdn.net/user/publishlist/w397090770" target="_blank"><img src="./test_files/2_w397090770.jpg" class="avatar"></a></dt>
+                <dd>
+					<a title="w397090770" class="user_name" href="http://geek.csdn.net/user/publishlist/w397090770" target="_blank">过往记忆</a>
+                                            <a nodetype="followUser" nodeuser="w397090770" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                        <p>个人大数据技术博客：http://www.iteblog.com</p>
+                </dd>
+            </dl>
+                    <dl>
+                <dt><a href="http://geek.csdn.net/user/publishlist/royal_lr" target="_blank"><img src="./test_files/2_royal_lr.jpg" class="avatar"></a></dt>
+                <dd>
+					<a title="royal_lr" class="user_name" href="http://geek.csdn.net/user/publishlist/royal_lr" target="_blank">Royal_lr</a>
+                                            <a nodetype="followUser" nodeuser="royal_lr" href="javascript:;" class="focus_btn"><span><i class="fa fa-plus"></i>关注</span><strong>已关注</strong><b>取消关注</b></a>
+                                        <p>全栈攻城狮不知道是怎么炼成的</p>
+                </dd>
+            </dl>
+            </li>
+<script src="./test_files/follow_person.js"></script>
+<script type="text/javascript">
+    $(function(){
+        showFollowUser();
+    });
+</script>						                    	                        
+                    </ul>
+                    <!--分类下的左侧广告 2015-12-16-->                    
+                    <div class="category_ad">
+		       	
+		
+	<!--<a href="#"><img src="/assets/images/category_ad_l.jpg"/></a>-->
+</div>                </div>
+            </div>
+        </div>
+    </div>
+    <div id="leftnav_scr_bar" style="visibility: visible;">
+        <div class="scroller_track">
+            <div class="scroller_handle" style="top: 0px; left: 0px; visibility: visible;"></div>
+        </div>
+    </div>
+</div>
+	
+<div class="right_cont" id="newest" data-pjax-container="">
+
+
+<div class="right_cont_body" tabindex="1">
+    <div class="close_right"><i class="fa fa-remove"></i></div>
+    <dl class="header  bor">
+        <dt>
+
+            <div class="news_vote" voteid="94003">
+                <i class="fa fa-sort-up" datatype="up"></i>
+                <div class="count count_color">1</div>
+                <i class="fa fa-sort-down" datatype="down"></i>
+            </div>
+        </dt>
+        <dd>
+
+
+            <h2>
+                                <span>携程App网络服务通道治理和性能优化</span>                            </h2>
+                                    <div class="clearfix">
+                                                <div class="tags pull-left" data-tag="网络服务,APP,携程,性能优化,架构">
+                                    <a class="label label-default" href="http://www.csdn.net/tag/%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/news" target="_blank">网络服务</a>
+                                    <a class="label label-default" href="http://www.csdn.net/tag/APP/news" target="_blank">APP</a>
+                                    <a class="label label-default" href="http://www.csdn.net/tag/%E6%90%BA%E7%A8%8B/news" target="_blank">携程</a>
+                                    <a class="label label-default" href="http://www.csdn.net/tag/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/news" target="_blank">性能优化</a>
+                                    <a class="label label-default" href="http://www.csdn.net/tag/%E6%9E%B6%E6%9E%84/news" target="_blank">架构</a>
+                                </div>
+                                <div class="pull-right" id="94003">
+                                        <!--add by liwz 2016-3-28-->
+                    <i class="fa"><em>阅读</em><b>648</b></i>
+                    <i class="fa fa-warning" data-toggle="tooltip" data-placement="bottom" onclick="report(&#39;news&#39;, &#39;qiansg123&#39;, &#39;94003&#39;);" title="" data-original-title="投诉">
+                    </i>
+                                                        </div>
+            </div>
+        </dd>
+    </dl>
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+        <!--<a class="btn btn-primary start_cmmde" data-target="geek">写极客头条</a>-->
+    <!--详情页面广告 2015-12-15 11:08-->
+    <div class="detail_ad_top">
+    <div class="detail_ad_t_l">
+        	<ins data-revive-zoneid="119" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+        </div>
+    <div class="detail_ad_t_r">
+        	<ins data-revive-zoneid="120" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+	    	<!--<a href="#"><img src="/assets/images/detail_ad_top.jpg"/></a>-->
+    </div>
+</div>
+
+				<div class="news_description ">
+                        <div class="description markdown_views">
+                <p>App网络服务的高可靠和低延迟对于无线业务稳定发展至关重要，过去两年来我们一直在持续优化App网络服务的性能，到今年Q2结束时基本完成了App网络服务通道治理和性能优化的阶段性目标，特此撰文总结其中的经验教训，为以后的工作打下基础。</p><h3>一、携程App无线网络服务架构</h3><p>2014年携程为无线服务开发了Mobile Gateway，有两种类型：TCP Gateway和HTTP Gateway。 TCP Gateway设计用于App中Native业务网络服务，基于TCP协议之上设计了应用层协议，类似于RPC机制。TCP Gateway兼具了接入层和服务动态路由的功能，接入层的功能基于Netty实现，管理客户端的TCP长连接或者短连接；动态路由的功能基于Netfix开源的Zuul实现（Zuul is a gateway service that provides dynamic routing, monitoring, resiliency, security, and more. ），可以在TCP Gateway上实现服务路由、监控、反爬和用户鉴权等功能。</p><p><img src="./test_files/20160808095604653" alt="图片描述" title=""></p><p>每个TCP服务请求到达TCP Gateway之后，会根据报文头中的服务号，转发到后端对应的业务服务集群上，从而实现后端服务的解耦。TCP Gateway到后端业务服务集群之间的转发使用HTTP协议的接口形式实现，一个TCP服务请求的完整报文会作为HTTP请求的Payload转发到后端业务服务集群，接收到HTTP响应后，会将其Payload完整的返回到对应的TCP连接中。</p><p>HTTP Gateway用于App中Hybrid和H5 Web站点的网络服务，采用HTTP Restful接口形式提供服务，其逻辑相对简单，核心是HTTP服务动态转发的功能。</p><p><img src="./test_files/20160808095616476" alt="图片描述" title=""></p><p>Mobile Gateway的更多设计实现细节可以参考王兴朝同学在2015上海QCon的演讲《携程无线Gateway》。</p><h3>二、基于TCP协议实现App网络服务</h3><p>带宽和延迟是影响网络服务性能的两个因素，带宽受网络通道上最小带宽的网段限制，延迟是网络包在客户端和服务端之间的来回传输时长，不同网络类型上的带宽和延迟差别非常大（见下图）。</p><p><img src="./test_files/20160808095630528" alt="图片描述" title=""></p><p>我们要实现更好性能的网络服务，对于网络自身的带宽和延迟这两点而言，能做只是尽可能选择最合适的网络通道，其他只能在如何使用网络通道上进行优化。</p><p>传统的非IM即时消息类App通常都是使用HTTP协议来实现网络服务的（Restful API形式），携程使用TCP协议来实现，确实会增加很多开发成本，例如需要设计应用层协议、管理网络连接、处理异常等，但下面几点原因还是让我们最终选择基于TCP协议来实现App网络服务：</p><ol>
+<li><p>携程用户有时会在网络环境非常差的景区使用，需要针对弱网进行特别的优化，单纯HTTP应用层协议很难实现；</p></li>
+<li><p>HTTP请求首次需要进行DNS域名解析，我们发现国内环境下针对携程域名的失败率在2-3%（包含域名劫持和解析失败的情况），严重影响用户体验；</p></li>
+<li><p>HTTP虽然是基于TCP协议实现的应用层协议，优势是封装性好，客户端和服务端解决方案成熟。劣势是可控性小，无法针对网络连接、发送请求和接收响应做定制性的优化，即使是HTTP的特性如保持长连接KeepAlive或者管道Pipeline等都会受制于网络环境中的Proxy或者服务端实现，很难充分发挥作用。</p></li>
+</ol><p>基于TCP协议实现可以让我们能够完整控制整个网络服务生命周期的各个阶段，包括如下几个阶段：</p><ol>
+<li>获取服务端IP地址</li>
+<li>建立连接</li>
+<li>序列化网络请求报文</li>
+<li>发送网络请求</li>
+<li>接受网络响应</li>
+<li>反序列化网络响应报文</li>
+</ol><p>我们的网络服务通道治理和优化工作就是从这几个方面展开的。</p><h3>三、TCP网络服务通道治理和性能优化</h3><p><strong>1. 告别DNS，直接使用IP地址</strong></p><p>如果是首次发送基于HTTP协议的网路服务，第一件事就是进行DNS域名解析，我们统计过DNS解析成功率只有98%，剩下2%是解析失败或者运营商DNS劫持（Local DNS返回了非源站IP地址），同时DNS解析在3G下耗时200毫秒左右，4G也有100毫秒左右，延迟明显。我们基于TCP连接，直接跳过了DNS解析阶段，使用内置IP列表的方式进行网络连接。</p><p>携程App内置了一组Server IP列表，同时每个IP具备权重。每次建立新连接，会选择权重最高的IP地址进行连接。App启动时，IP列表的所有权重是相同的，此时会启动一组Ping的操作，根据Ping值的延迟时间来计算IP的权重，这么做的原理是Ping值越小的IP地址，连接后的网络传输延迟也应该相对更小。业界也有使用HTTP DNS方式来解决DNS劫持问题，同时返回最合适用户网络的Server IP。然而HTTP DNS的开发和部署需要不小的开发成本，我们目前没有使用。</p><p>内置Server IP列表也会被更新，每次App启动后会有个Mobile Config服务（支持TCP和HTTP两种网络类型服务）更新Server IP列表，同时支持不同产品线的Server IP列表更新。因此，传统DNS解析能够解决多IDC导流的功能也可以通过此方法解决。</p><p><strong>2. Socket连接优化，减少连接时间</strong></p><p>和HTTP协议中的Keepalive特性一样，最直接减少网络服务时间的优化手段就是保持长连接。每次TCP三次握手连接需要耗费客户端和服务端各一个RTT（Round trip time）时间才能完成，就意味着100-300毫秒的延迟；TCP协议自身应对网络拥塞的Slow Start机制也会影响新连接的传输性能。</p><p>携程App使用了长连接池的方式来使用长连接，长连接池中维护了多个保持和服务端的TCP连接，每次网络服务发起后会从长连接池中获取一个空闲长连接，完成网络服务后再将该TCP连接放回长连接池。我们没有在单个TCP连接上实现Pipeline和Multiplexing机制，而是采用最简单的FIFO机制，原因有二：1. 简化Mobile Gateway的服务处理逻辑，减少开发成本；2. 在服务端同时返回多个响应时，如果某个响应报文非常大，使用多个长连接方式可以加快接收服务响应报文速度。</p><p>如果发起网络服务时长连接池中的TCP连接都正在被占用，或者TCP长连接的网络服务失败，则会发起一个TCP短连接实现网络服务。这里长连接和短连接的区别仅仅是服务完成后是否直接关闭这个TCP连接。</p><blockquote>
+  <p>附：Pipeline和Multiplexing是有区别的，如HTTP/1.1支持Pipeline，客户端能否同时发送多个请求，但是服务端返回响应时也要按照请求的发送次序来返回响应；SPDY和HTTP/2协议支持Multiplexing，即支持响应报文的乱序返回，发送请求和接收响应互不干扰，因此避免了HTTP/1.1 Pipeline也没能完全解决的Head of line blocking问题。参考资料：1, 2。参考资历2中提到HTTP/1.1的Pipeline特性只是部分解决了Head of line blocking问题，因为a large or slow response can still block others behind it。</p>
+</blockquote><p><strong>3. 弱网和网络抖动优化</strong></p><p>携程App引入了网络质量参数，通过网络类型和端到端Ping值进行计算，根据不同的网络质量改变网络服务策略：</p><p>1) 调整长连接池个数：例如在2G/2.5G Egde网络下，会减少长连接池个数为1（运营商会限制单个目标IP的TCP连接个数）；WIFI网络下可以增加长连接池个数等机制；</p><p>2) 动态调整TCP connection、write、read的超时时间；</p><p>3) 网络类型切换时，例如WIFI和移动网络、4G/3G切换至2G时，客户端IP地址会发生变化，已经连接上的TCP Socket注定已经失效（每个Socket对应一个四元组：源IP、源Port、目标IP、目标Port），此时会自动关闭所有空闲长连接，现有网络服务也会根据状态自动重试。</p><p><strong>4. 数据格式优化，减少数据传输量和序列化时间</strong></p><p>传输数据量越小，在相同TCP连接上的传输时间越短。携程App曾经使用自行设计的一套数据格式，后来和Google ProtocolBuffer对比后发现，特定数据类型下数据包大小会降低20-30%，序列化和反序列化时间可以降低10-20%，因此目前核心服务都在逐步迁移到到ProtocolBuffer格式。另外Facebook曾分享过他们使用FlatBuffer数据格式提高性能的实践，我们分析后不太适合携程的业务场景因而没有使用。</p><p><strong>5. 引入重试机制，提升网络服务成功率</strong></p><p>受TCP协议重传机制来保证可靠传输的机制启发，我们在应用层面也引入了重试机制来提高网络服务成功率。我们发现90%以上的的网络服务失败都是由于网络连接失败，此时再次重试是有机会连接成功并完成服务的；同时我们发现前面提到的网络服务生命周期处于1建立连接、序列化网络请求报文、发送网络请求这三个阶段失败时，都是可以自动重试的，因为我们可以确信请求还没有达到服务端进行处理，不会产生幂等性问题（如果存在幂等性问题，会出现重复订单等情况）。当网络服务需要重试时，会使用短连接进行补偿，而不再使用长连接。</p><p>实现了上述机制后，携程App网络服务成功率由原先的95.3%+提升为如今的99.5%+（这里的服务成功率是指端到端服务成功率，即客户端采集的服务成功数除以请求总量计算的，并且不区分当前网络状况），效果显著。</p><p><strong>6. 其他网络服务机制 &amp; Tricks</strong></p><p>携程App也实现了其他一些网络服务机制方便业务开发，如网络服务优先级机制，高优先级服务优先使用长连接，低优先级服务默认使用短连接；网络服务依赖机制，根据依赖关系自动发起或取消网络服务，例如主服务失败时，子服务自动取消。</p><p>开发过程中我们也发现一些移动平台上的TCP Socket开发tricks：</p><p>1) iOS平台上的原生Socket接口创建连接并不会激活移动网络，这里原生Socket接口是指POSIX Socket接口，必须使用CFSocket或者再上层的网络接口尝试网络连接时才会激活网络。因此携程App启动时会优先激活注册一些第三方SDK以及发送HTTP请求来激活移动网络；</p><p>2) 合理设置Socket的几个参数：SOKEEPALIVE参数确保TCP连接保持（注：此KeepAlive是TCP中的属性，和HTTP的KeepAlive是两个场景概念），SONOSIGPIPE参数关闭SIGPIPE事件，TCP_NODELAY参数关闭TCP Nagle算法的影响；</p><p>3) 由于iOS要求支持IPv6-Only网络，因此使用原生Socket必须支持IPv6；</p><p>4) 如果使用select来处理nonblocking IO操作，确保正确处理不同的返回值和超时参数；</p><p>5) 保持TCP长连接可用性的心跳机制：对于非IM类应用而言，心跳机制的作用不大，因为用户会不断触发请求去使用TCP连接，尤其在携程业务场景下，通过数据统计发现使用心跳与否对服务耗时和成功率影响极小，因此目前已经关闭心跳机制。原先的心跳机制是TCP长连接池中的空闲TCP连接每60秒发送一个心跳包到Gateway，Gateway返回一个心跳响应包，从而让双方确认TCP连接有效。</p><h3>四、Hybrid网络服务优化</h3><p>携程App中有相当比例的业务是使用Hybrid技术实现的，运行在WebView环境中，其中的所有网络服务（HTTP请求）都是由系统控制的，我们无法掌控，也就无法进行优化，其端到端服务成功率也仅有97%左右（注：这里指页面中业务逻辑发送的网络服务请求，而非静态资源请求）。</p><p>我们采用了名为『TCP Tunnel for Hybrid』的技术方案来优化Hybrid网络服务，和传统HTTP加速产品的方法不同，我们没有采用拦截HTTP请求再转发的方式，而是在携程Hybrid框架中的网络服务层进行自动切换。</p><p><img src="./test_files/20160808095704294" alt="图片描述" title=""></p><p>如图所示，该技术方案的流程如下：</p><ol>
+<li><p>如果App支持TCP Tunnel for Hybrid，Hybrid业务在发网络服务时，会通过Hybrid接口转发至App Native层的TCP网络通讯层，该模块会封装这个HTTP请求，作为TCP网络服务的Payload转发到TCP Gateway；</p></li>
+<li><p>TCP Gateway会根据服务号判断出是Hybrid转发服务，解包后将Payload直接转发至HTTP Gateway，此HTTP请求对HTTP Gateway是透明的，HTTP Gateway无需区分是App直接发来的还是TCP Gateway转发来的HTTP请求；</p></li>
+<li><p>后端业务服务处理完成后，HTTP响应会经HTTP Gateway返回给TCP Gateway，TCP Gateway将此HTTP响应作为Payload返回给App的TCP网络通讯层；</p></li>
+<li><p>TCP网络通讯层会再将该Payload反序列化后返回给Hybrid框架，最终异步回调给Hybrid业务调用方。整个过程对于Hybrid业务调用方也是透明的，它并不知道TCP Tunnel的存在。</p></li>
+</ol><p>采用该技术方案后，携程App中Hybrid业务的网络服务成功率提升至99%以上，平均耗时下降了30%。</p><p><img src="./test_files/20160808095911042" alt="图片描述" title=""></p><h3>五、海外网络服务优化</h3><p>携程目前没有部署海外IDC，海外用户在使用App时需要访问位于国内的IDC，服务平均耗时明显高于国内用户。我们采用了名为『TCP Bypass for Oversea』的技术方案来优化海外网络服务性能，主要是使用了Akaima的海外专属网络通道，同时在携程国内IDC部署了局端设备，使用专用加速通道的方式来提升海外用户体验。</p><p><img src="./test_files/20160808095923308" alt="图片描述" title=""></p><p>海外用户启动App后先通过Akaima定制域名获取Server IP，所有网络服务优先走Akaima通道；如果Akaima通道的网络服务失败并且重试机制生效时，会改走传统Internet通道进行重试。相比只用传统Internet通道，在保持网络服务成功率不变的情况下，使用Akaima通道Bypass技术后平均服务耗时下降了33%。</p><p><img src="./test_files/20160808095934433" alt="图片描述" title=""></p><h3>六、其他网络协议探讨</h3><p>过去两年我们的网络服务优化工作都是基于TCP协议实现的，基本达到了优化目标。不过这两年来新的应用层网络协议SPDY和HTTP/2逐步迈入主流，基于UDP的QUIC协议看起来也非常有趣，值得跟进调研。</p><p><strong>SPDY &amp; HTTP/2</strong></p><p>SPDY是Google基于TCP开发的网络应用层协议，目前已经停止开发，转向支持基于SPDY成果设计的HTTP/2协议，HTTP/2协议的核心改进其实就是针对HTTP/1.x中影响延迟性能的痛点进行优化：</p><ol>
+<li>Header压缩：压缩冗余的HTTP请求和响应Header;</li>
+<li>支持Multiplexing：支持一个TCP连接上同时实现多个请求和响应。</li>
+<li>保持长连接（比HTTP/1.x更彻底）：减少网络连接时间。</li>
+<li>支持推送：可以由服务端主动推送数据到客户端。</li>
+</ol><p>官方性能测试结果显示使用SPDY或者HTTP/2的页面加载时间减少30%左右，不过这是针对网页的测试结果，对于App中的网络服务，具体优化效果我们还在进行内部测试，不过其优化手段看和目前我们使用TCP协议的优化手段类似，因此性能优化效果可能不会很显著。</p><p><strong>QUIC</strong></p><p>QUIC是Google基于UDP开发的应用层协议，UDP协议无需连接，不存在重传机制，因此应用层需要保证服务的可靠性。目前国内腾讯有针对弱网络尝试过QUIC协议，我们也在进行测试，最终是否会采用还需要看测试的结果。</p><h3>七、综述</h3><p>技术只是手段，最终还是要反映在业务效果上。我们已经实现除静态资源等需要访问CDN的网络请求外，其他App网络服务使用统一的TCP通道，从而具备更好的性能调优和业务监控能力。</p><p>携程目前基于TCP协议的各种App网络服务优化，也是各种技术方案的平衡，虽然目前HTTP/2等新协议逐步成熟，但是TCP协议自身的灵活性支持有针对性的性能优化，还是具备其特别的优势，希望我们的实践总结能对国内无线技术从业者有一些借鉴价值。</p><blockquote>
+  <p><strong>作者：</strong>陈浩然，携程无线开发总监，计算机博士，2008年iOS SDK发布后，投身移动互联网。先后在外企、创业型和国内一线旅游公司从事无线App的开发工作，从企业级App、独立App到亿级用户量级的App都有全程参与。 <br>
+  <strong>责编：</strong>钱曙光，关注架构和算法领域，寻求报道或者投稿请发邮件qianshg@csdn.net，另有「CSDN 高级架构师群」，内有诸多知名互联网公司的大牛架构师，欢迎架构师加微信qshuguang2008申请入群，备注姓名+公司+职位。 </p>
+</blockquote>            </div>
+<!--            <div class="text-center show_more"><i class="fa fa-angle-down"></i></div>-->
+		</div>
+				<div class="footer_bar clearfix">
+			<div class="pull-left">
+				<a href="http://geek.csdn.net/user/publishlist/qiansg123" target="_blank">
+					<img class="avatar" src="./test_files/2_qiansg123.jpg">
+				</a>
+                <a class="user_name" href="http://geek.csdn.net/user/publishlist/qiansg123" target="_blank">钱曙光</a>
+
+				发布于<a forumid="83" href="http://geek.csdn.net/forum/83" target="_blank" class="forum_name forum_for_cmmde">架构</a>
+                <span class="time">1小时前</span>
+            </div>
+			<div class="pull-right hidden-xs">
+				<span class="share">分享到：
+                    <span class="bdsharebuttonbox bdshare-button-style2-32" data-bd-bind="1470626925557">
+                        <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                        <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    </span>
+                </span>
+				<script>
+
+                    window._bd_share_config={
+                        "common":{
+                            "bdSnsKey":{
+                                "tsina":"http://geek.csdn.net",
+                                "tqq":"来自极客头条",
+                                "tweixin":"来自极客头条"
+                            },
+                            "bdText":"携程App网络服务通道治理和性能优化（来自 @极客头条 ）",
+                            "bdMini":"2",
+                            "bdMiniList":false,
+                            "bdPic":"http://img.my.csdn.net/awG5LZABlv143523199429.jpg?imageView2/2/w/160",
+                            "bdStyle":"2",
+                            "bdSize":"32"
+                        },
+                        "share":{}
+                    };
+                    with(document)0[(getElementsByClassName('footer_bar')[0]).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+
+
+
+				</script>
+			</div><script src="./test_files/share.js"></script>
+		</div>
+		<!--<div class="ad_small">
+            <dl>
+                <dt>
+                    <img src="/assets/images/csdn_logo.png"/>
+                    <p>CSDN App<br/>随时随地看头条！</p>
+                </dt>
+                <dd>
+                    <a href="http://ms.csdn.net/download.html" class="down_app">下载App</a>
+                    <img src="/assets/images/ad_close.png" class="ad_close"/>
+                </dd>
+            </dl>
+        </div>
+        <div class="ad">
+            <img class="ad_img" src="/assets/images/app.jpg" border="0"/>
+            <a class="ad_ios" href="https://itunes.apple.com/app/csdn-guan-fang/id952943888"><img src="/assets/images/ios.png"/></a>
+            <a class="ad_android" href="http://csdn-app.csdn.net/csdn.apk"><img src="/assets/images/android.png"/></a>
+        </div>
+        <script>
+            $(function()
+            {
+                $(".ad_close").on("click",function()
+                {
+                    $(this).parents(".ad_small").hide(300);
+                })
+            })
+        </script>-->
+
+        <!--详情页面广告 2015-12-15 11:08-->
+        <div class="detail_ad">
+	<ins data-revive-zoneid="121" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+	<!--<a href="#"><img src="/assets/images/detail_ad.jpg"/></a>-->
+</div>
+    
+		<div class="reply_news_btn">
+            <span class="reply reply_news start_cmmde btn btn-primary btn-sm" data-target="comment_news" title="评论：携程App网络服务通道治理和性能优化">评论</span>
+		</div>
+
+        <div id="comments" class="csdn_comments">                <div class="reply topreply">            <input id="user" value="发表评论" type="submit" class="reply_btn btn btn-primary">            </div>    <div id="csdnTab" class="comments_reply">    <h2 class="comments_tit">        已有<span>0</span>条评论    </h2>        <div class="tit tab_1">            <ul>                <li class="hover">最新</li>                <li>最热</li>            </ul>        </div>        <div class="con last"><div class="empty-placeholder">                <div class="empty-tip">还没有评论，赶快来抢沙发吧。</div>            </div></div>        <div class="con hot" style="display:none"><div class="empty-placeholder">                <div class="empty-tip">还没有评论，赶快来抢沙发吧。</div>            </div></div>        <div id="get_more_comment" class="text-center get_more" style="display: none"><i class="fa fa-spinner fa-spin"></i></div>    </div></div>
+        <div class="cmmde_bg close"></div>
+</div>
+		        		<script type="text/javascript">
+		    //var path = location.protocol +"//"+ location.host+"/comments/";                 //本地测试需要配置一个csdn.net的子域名，以便登录，例:http://comments.csdn.net
+		    var path = "http://ptcms.csdn.net/comment";
+                new csdn.comments({
+                    id: "comments",                                                                  //容器ID
+                    path: path,
+                    datapath: "http://ptcms.csdn.net",                                          //数据接口host
+                    cssUrl: "/assets/css/comments.css",                                                 //css地址
+                    //loginUrl:path+"/js/login.js",                  //login.js地址
+                    loginUrl: "https://passport.csdn.net/content/loginbox/login.js",
+                    //articleURL:"http://geek.csdn.net/news/detail/94003",
+                    //articleURL: "http://geek.csdn.net/news/detail/94003",
+                    articleURL: "http://geek.csdn.net/news/detail/94003",
+                    title: "%E6%90%BA%E7%A8%8BApp%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E9%80%9A%E9%81%93%E6%B2%BB%E7%90%86%E5%92%8C%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96",
+                    md5: "http://static.blog.csdn.net/scripts/md5.js",                               //用于计算用户头像的md5.js地址
+                    componentsUrl: path + "/js/componet.js",              //CSDN通用组件地址
+                    toolkitUrl: path + "/js/toolkit.js",                  //CSDN工具包地址
+                    tab: {                                                                           //【通用组件】tab
+                        id: "csdnTab",                                                               //容器ID
+                        highlight: "hover"                                                           //表示当前选择的CSS样式名
+                    },
+                    pagination: {                                                                    //【通用组件】AJAX分页组件
+                        pagesize: 10,                                                                //每页多少条数据
+                        showpages: 10                                                                //显示多少页
+                    },
+                    oncountchange: function (count) {                                                  //评论数chagnge回调
+                        var el = document.getElementById('remark_count1');
+                        if (el) {
+                            el.innerHTML = count
+                        }
+                    }
+                });
+		</script>
+
+		
+		
+
+<script type="text/javascript">
+$(document).ready(function(){
+    //正文折叠
+//    var _nd = $('.news_description .description').height();
+//    if(_nd > 220){
+//        $('.news_description').addClass('mini open');
+//    }
+
+//    $('.show_more').click(function(){
+//        $('.news_description').toggleClass('open');
+//    });
+
+	//这里是置顶和取消置顶事件
+    $('.fa-arrow-circle-up,.fa-arrow-circle-down').click(function(){
+    	var type = $(this).hasClass('fa-arrow-circle-up') ? 1 : 0;
+        var news_id = $(this).parent().attr('id');
+        var item = $(this);
+                url = 'http://geek.csdn.net/news/do_top?jsonpcallback=?';
+                $.getJSON(url,
+                {'id':news_id,'type':type},function(data){
+                    if(data.success){
+                    	if(type)
+                    	{
+                    		item.removeClass('fa-arrow-circle-up').addClass('fa-arrow-circle-down').attr('data-original-title','取消置顶');
+                            $('.tooltip-inner').text('取消置顶');
+                    	}
+                    	else
+                    	{
+                    		item.removeClass('fa-arrow-circle-down').addClass('fa-arrow-circle-up').attr('data-original-title','置顶');
+                            $('.tooltip-inner').text('置顶');
+                    	}
+                    }
+                    else
+					{
+                        alert(data.msg);
+                    }
+        },'json');
+    });
+    $('.fa-trash-o').click(function(){
+        if(confirm("您确定删除吗？")){
+    	var news_id = $(this).parent().attr('id');
+                url = 'http://geek.csdn.net/news/do_del?jsonpcallback=?';
+                $.getJSON(url,
+            {'id':news_id},function(data){
+                if(data.success > 0){
+                    window.location.href="http://geek.csdn.net/newest";
+                }
+                else
+                {
+                    alert(data.msg);
+                }
+        },'json');
+        }else{
+			return false;
+        }
+    });
+});
+</script>
+
+</div><div id="l_a_pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);"></div><div id="l_a_popup_mask" style="display: none;position: absolute;width: 100%;height: 100%;background: #000;z-index: 9999;left: 0px;top: 0px;opacity: 0.3;filter: alpha(opacity=30);"></div>
+
+<ul class="scrolltop_bar list-unstyled data-offset-top in_viewer affix-top" data-spy="affix" data-offset-top="250">
+    <li class="new_share" title="分享">
+        <div class="bdsharebuttonbox hover_show bdshare-button-style2-32" data-bd-bind="1470626925557">
+            <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        </div>
+        <a class="btn hover_hide"> <i class="fa fa-share-alt"></i></a>
+    </li>
+    <li class="new_comment">
+        <a class="start_cmmde btn" data-target="comment_news"><span>添加评论</span><i class="fa fa-comments"></i></a>
+    </li>
+    <li class="new_geek">
+        <a data-target="geek_link" class="start_cmmde btn"><span>发布链接</span><i class="fa fa-link"></i></a>
+    </li>
+    <li class="new_geek">
+        <a data-target="geek_new" class="start_cmmde btn"><span>发布图文</span><i class="fa fa-file-text-o"></i></a>
+    </li>
+    <li class="js-scroll-top">
+        <a class="btn"><span>返回顶部</span><i class="fa fa-arrow-up"></i></a>
+    </li>
+    <li class="js-list-top">
+        <a class="btn"><span>返回顶部</span><i class="fa fa-arrow-up"></i></a>
+    </li>
+</ul>
+<div class="popup_ads">
+<ins data-revive-zoneid="150" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+<ins data-revive-zoneid="151" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+<ins data-revive-zoneid="152" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+</div>
+    <div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display:none; position:absolute; z-index:9990; width:170px">  <iframe src="./test_files/saved_resource(1).html" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./test_files/notify.js"></script><input type="hidden" id="aa_g_data_ids">
+    <script src="./test_files/toolbar.js"></script>
+
+<script src="./test_files/csdntags.min.js"></script>
+<script>
+
+    document.domain = "csdn.net";
+    //var postsite = "http://test.geek.csdn.net";
+    var postsite = "http://geek.csdn.net";
+    var img_upload_url = "http://write.blog.csdn.net/article/UploadImgMarkdown?parenthost=write.blog.csdn.net";
+
+    window.baseDir = '/assets/res';
+    if (!/(\?|&)debug($|&)/.test(location.search)) {
+        window.baseDir += '-min';
+    }
+    window.require = {
+        baseUrl: window.baseDir,
+        deps: ['main']
+    };
+</script>
+<script src="./test_files/require.js"></script>
+<script>
+    $(document).ready(function(){
+        $('body').delegate('.news_vote .fa', 'click', function(){
+            var $vote_item = $(this).parent('.news_vote'),
+                datatype = $(this).attr('datatype'),
+                votestatus;
+            if(datatype == "up"){
+                votestatus = 1;
+            }else if(datatype == "down"){
+                votestatus = 2;
+            }
+            news_id = $vote_item.attr('voteid');
+            disabled = $vote_item.hasClass('disabled');
+            loading = $vote_item.hasClass('vote_loading');
+            if(disabled || loading){
+                return;
+            }
+            $vote_item.addClass('vote_loading');
+                        url = 'http://ptcms.csdn.net/like/like/do_like?jsonpcallback=?';
+            
+            $.getJSON(url,
+                {'article_id':news_id,'status':votestatus,'domain':'geek.csdn.net'},function(data){
+                    if(data.succ > 0){
+                        //console.log(data);
+                        $vote_item = $('[voteid="'+ news_id +'"]');
+                        $vote_item.find('.count').text(data.info.ding-data.info.cai);
+                        $vote_item.removeClass('isdown isup');
+                        if(data.status == 1){
+                            $vote_item.addClass('isup');
+                            $('[data-counts="vote"]').each(function(){
+                                $(this).text(parseInt($(this).text()) + 1);
+                            });
+                        }else if(data.status == 2){
+                            $vote_item.addClass('isdown');
+                            if(data.origin_status == 1){
+                                $('[data-counts="vote"]').each(function(){
+                                    $(this).text(parseInt($(this).text()) - 1);
+                                });
+                            }
+                        }else if(data.status == -1 && data.origin_status == 1){
+                            $('[data-counts="vote"]').each(function(){
+                                $(this).text(parseInt($(this).text()) - 1);
+                            });
+
+                        }
+                    }
+                    if(data.succ == -2){
+                        alert(data.msg);
+                        window.location.href='https://passport.csdn.net/account/login';
+                    }
+                    if(data.succ == -1){
+                        alert(data.msg);
+                    }
+                    $vote_item.removeClass('vote_loading');
+                },'json');
+
+        });
+
+    });
+
+</script>
+<script src="./test_files/cnick.js"></script>
+
+
+<div class="cmmde close"><div id="csdnEditorB" class="cmmde_box ltr" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"><div class="cmmde_reply">
+    <i class="fa fa-comments-o"></i>
+    <span></span>
+</div>
+<div class="cmmde_title" title="标题">
+    <i class="fa fa-plus"></i>
+    <input type="text" required="required" placeholder="请输入标题" maxlength="80">
+</div>
+<div class="cmmde_link" title="链接">
+    <i class="fa fa-link"></i>
+    <input type="text" required="required" placeholder="请输入链接地址">
+</div>
+<div class="cmmde_link_desc" title="推荐理由">
+    <i class="fa fa-share"></i>
+    <textarea id="cmmde_link_desc" placeholder="请输入推荐理由"></textarea>
+</div>
+<div class="cmmde_tips">
+</div>
+<div class="cmmde_mark"><div class="cmmde_pub">发布插件：<a target="_blank" href="https://chrome.google.com/webstore/detail/csdn-geek/nlokgmggbfiobnpmkijnjbnomdjnmeon">Chrome插件（需科学上网）</a><a href="https://addons.mozilla.org/zh-CN/firefox/addon/csdn-geek/" target="_blank">Firefox 插件</a><a class="book" target="_blank" title="拖动此链接到浏览器书签中" href="javascript:window.location=&quot;http://geek.csdn.net/news/bookmarklet?u=&quot;+encodeURIComponent(document.location)+&quot;&amp;t=&quot;+encodeURIComponent(document.title)">浏览器书签</a></div>
+  
+</div>
+<div class="cmmde_tags">
+    <i class="fa fa-tags"></i>
+    <span id="cmmde_tag_add">
+        <span class="tags_label"></span>
+        <input type="text" placeholder="请输入标签" maxlength="20">
+    </span>
+    <input type="hidden" id="cmmde_tag_val">
+    <i class="fa fa-refresh cmmde_tag_refresh hide" title="重新推荐标签"></i>
+</div>
+<div class="cmmde_btns">
+    <span class="cmmde_forum">
+        <span>发布到</span>
+        <span class="btn btn-sm btn-default dropdown-toggle">
+            <span id="cmmde_categories">主题</span>
+
+            <span class="caret"></span>
+        </span>
+        <input id="cmmde_categories_val" type="hidden">
+        <div class="dropdown-menu">
+            <h4>请选择一个主题进行发布<span class="caret"></span></h4>
+            <input class="form-control" type="text" placeholder="筛选主题">
+            <div id="categories-box" class="row"></div>
+            <div id="categories-loading"></div>
+        </div>
+    </span>
+    <span class="btn btn-sm btn-primary cmmde_post_btn">发布</span>
+    <span class="btn btn-sm btn-primary cmmde_comment_btn">评论</span>
+</div>
+<div class="cmmde_off">
+    <span class="btn btn-sm layout-toggler-navbar open" title="全屏"><i class="fa fa-arrows-alt"></i></span>
+    <span class="btn btn-sm cmmde_close" title="隐藏[输入内容保留]"><span class="arrow"></span> </span>
+    <span class="btn btn-sm cmmde_cancel" title="关闭[输入内容清空]"><i class="fa fa-remove"></i> </span>
+</div>
+<div class="cmmde_editor">
+    <div id="dragbar" style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); touch-action: pan-y;"></div>
+    <div class="layout-wrapper-l1" style="transform: translate(0px, 0px); width: 1048px; height: 210px;">
+        <div class="layout-wrapper-l2" style="left: 0px; width: 1048px; height: 210px;">
+            <div class="navbar navbar-default">
+                <div class="navbar-inner">
+                    <div class="buttons-dropdown dropdown hide">
+                        <div class="nav">
+                            <button class="btn btn-success" data-toggle="dropdown" title="显示工具">
+                                <i class="fa fa-th-large"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="nav left-buttons">
+                        <li class="wmd-button-group1 btn-group">
+                        </li>
+                    </ul>
+                    <ul class="nav left-buttons">
+                        <li class="wmd-button-group2 btn-group">
+                            <a class="wmd-button btn" href="http://blog.csdn.net/whqet/article/details/44274999" target="_blank"><i class="fa fa-question-circle"></i> </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="layout-wrapper-l3" style="top: 50px; width: 1048px; height: 160px;">
+                <pre id="wmd-input" class="form-control font-rich" style="width: 509px; height: 160px;"><div class="editor-content" contenteditable="true" style="padding-left: 35px; padding-right: 35px; padding-bottom: 100px;"></div><div class="editor-margin" style="width: 35px;"></div></pre>
+                <div class="preview-panel panel-open" style="transform: translate(509px, 0px); width: 539px; height: 160px;">
+                    <div class="layout-resizer layout-resizer-preview open" style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); touch-action: pan-y; height: 160px;"></div>
+                    <div class="layout-toggler layout-toggler-preview btn open" title="预览" style="transform: translate(0px, 60px); height: 40px;"><i class="arrow"></i></div>
+                    <div class="preview-container" style="left: 30px; width: 509px; height: 160px;">
+                        <div id="preview-contents" style="padding-left: 35px; padding-right: 35px; padding-bottom: 100px;">
+                            <div id="wmd-preview" class="preview-content"></div>
+                        <div id="wmd-preview-section-footnotes" class="preview-content"></div></div>
+                    </div>
+                </div>
+            </div>
+        <div class="find-replace" style="display: none;"><button type="button" class="close button-find-replace-dismiss">×</button>
+<div class="form-inline">
+    <div class="form-group">
+        <label for="input-find-replace-search-for">搜索字符</label>
+        <input class="form-control" id="input-find-replace-search-for" placeholder="搜索字符">
+    </div>
+    <div class="form-group">
+        <label for="input-find-replace-replace-with">替换为</label>
+        <input class="form-control" id="input-find-replace-replace-with" placeholder="替换为">
+    </div>
+</div>
+<div class="pull-right">
+    <div class="help-block text-right">
+        <span class="found-counter">0</span> 处
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary search-button">搜索</button>
+        <button type="button" class="btn btn-default replace-button">替换</button>
+        <button type="button" class="btn btn-default replace-all-button">全部</button>
+    </div>
+</div>
+<div class="pull-left">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" class="checkbox-case-sensitive"> 区分大小写
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" class="checkbox-regexp"> 正则表达式
+        </label>
+    </div>
+</div>
+</div></div>
+        <div id="wmd-button-bar" class="hide"></div>
+    </div>
+</div>
+
+<div class="modal fade modal-insert-link">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">添加链接</h4>
+            </div>
+            <div class="modal-body">
+                <p>链接md语法为：[链接内容](http://my.url "提示")。</p>
+                <div class="input-group">
+					<span class="input-group-addon">
+                        <i class="fa fa-link"></i>
+                    </span>
+                    <input id="input-insert-link" type="text" class="col-sm-5 form-control" placeholder="http://example.com/">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" data-dismiss="modal">取消</a>
+                <a class="btn btn-primary action-insert-link" data-dismiss="modal">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade modal-insert-image">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">插入图片</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="http://geek.csdn.net/news/detail/94003#img_online" role="tab" data-toggle="tab">在线图片</a></li>
+                    <li role="presentation"><a href="http://geek.csdn.net/news/detail/94003#img_upload" role="tab" data-toggle="tab">上传图片</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="img_online">
+                        <p>图片md语法为：![图片描述](http://img.src)。</p>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-photo"></i></span>
+                            <input id="input-insert-image" type="text" class="col-sm-5 form-control" placeholder="http://example.com/image.jpg">
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="img_upload">
+                        <iframe name="up_img" src="./test_files/saved_resource(2).html"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" data-dismiss="modal">取消</a> <a class="btn btn-primary action-insert-image" data-dismiss="modal">确定</a>
+            </div>
+        </div>
+    </div>
+</div></div></div>
+<script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/async_new.js"></script>
+<script src="./test_files/tracking.js"></script>
+<script src="./test_files/repoAddr2.js"></script>
+<script src="http://csdnimg.cn/rabbit/tracking-ad/main.js?75eacd6"></script>
+
+
+	
+<script type="text/javascript" src="./test_files/MathJax(1).js"></script>
+
+<div id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"></div>
+  </div>
+</div><iframe frameborder="0" style="position: absolute; left: -10000px;" src="./test_files/saved_resource(3).html"></iframe><div class="cmmde_bg close"><i class="fa fa-spinner"></i></div><ul class="complete_list"></ul></body><input style="width:1px;height:1px;border:none;margin:0;padding:0;" tabindex="-1"></html>

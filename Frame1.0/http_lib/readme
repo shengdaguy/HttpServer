@@ -1,0 +1,53 @@
+1.大概描述：这是一个简单的http服务器(暂时提供get请求的小文件下载功能)的业务逻辑部分
+
+2.结构介绍：
+	data.h:
+	memorycache.c
+	service.h service.c
+
+
+	init_http_request();
+	init_http_response();
+
+	conn_to_request();
+
+	parse_request();
+
+	send_response();	
+	
+
+	destroy_http_request();
+	destroy_http_response();
+	
+3.相关系统调用和库函数（TODO）
+	getcwd chdir stat struct stat struct utimebuf
+
+4.可以尽量的吸收自己能够从nginx吸收到的东西
+	a.time_t 是type的意思 _e 是enum的意思  表明这是一个type 或enum
+	b.业务逻辑部分应该有单独的配置文件？
+	c.对象(request response header body ...)need init function and destroy function 
+
+
+5.过程总结：
+	a.结合理论(书本知识等) 去体会 模块化编程 设计模式 命名风格 鲁帮性 错误处理 
+		程序结构等
+	b.要结合手写代码等技巧 代码写完之后编译尽量0error 0 waring  
+	c.HTTP协议要认真看看。参见RFC http权威指南
+	d.代码能力太弱：链表 字符串(parse)太渣  。。。。
+	e.自己多Frame 的理解不够 确实要找个像样的框架看看。muduo是C++
+	能够从框架结构  程序逻辑结构上有正确的理解
+	d.自己放在myutil里的是不对的。这个并不能是Nginx里的core里的list
+   	自己写不出来C++里面的抽象机制的list, 也不应该让util和业务藕合。
+	所以这个暂时直接使用vecto自己放在myutil里的是不对的。这个并不能是Nginx里的core里的list
+   	自己写不出来C++里面的抽象机制的list, 也不应该让util和业务藕合。
+	所以这个暂时直接使用vector.
+	f.用到了现在才刚到认真的使用vim提高开发效率.离思维 各种技巧 还早着呢。
+	g.记录3个小卡：1.parse request header. 2.generate response header 3.不同的情况不同的处理					所使用的程序逻辑结构.
+	h.init错误。 传递指针是不行的。C永远都是值传递 要么返回指针赋值 或者引用 
+	i.memory cache 没有完成  docroot之外访问完成的不好 好多功能细节有待扩展
+	j.bug:epoll_in 接受的请求最后可能是不太准确的 bug2:框架和业务逻辑都有问题 
+		终于找到原因： send 出现错误 (乖自己从一开是就没重视错误检查。):
+		no such file or directory | not a directory (这两个是chdir其他导致的。) | resouce temporarily unaviable  这个也叫EAGAIN 英语差果然不行 ==>把发送缓冲区设置大一些： 自己的解决问题的思维果然是烂到家了。因为太懒所以捅不破那层窗户纸。
+	k. ./server > file 出现段错误 ？？？
+	l.最后还有好多错误和漏洞 以后完善 追求细节和质量 模块化 学习能力 思考 发现问题 解决问题			认识到自己真的太渣
+

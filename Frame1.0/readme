@@ -1,0 +1,81 @@
+1. 做一个产品：可以处理get请求的提供HTTP文件下载的HTTP服务器。
+	产品功能要求：
+	a.处理get请求的文件下载功能。
+	b.健壮
+		1.恶意请求(POST DELETE 等)
+		2.docroot之外的文件下载请求:Forbbiden
+		3.request too long 
+		4.
+	c.高性能
+		1.内存缓存避免文件IO
+		2.连接池细分到工作线程
+		3.非阻塞IO--epoll实现
+		4.线程池实现高并发
+		5.Hash实现连接池
+		6.内存池--管理内存
+	d.灵活
+		1.提供动态链接库接口
+
+	注：可以在完成原有的功能上合理添加功能。
+2.可以尝试提供产品设计图   开发文档等
+
+3.测试！！ 要在不同的层次进行test
+	a.功能模块测试
+	b.函数功能测试
+	c.产品功能测试()
+4.参见nginx源码 ： .c和.h可以全放在/src下
+
+5.gdb调试：多线程调试： 不容易调，因为监听线程的epoll本身似乎占了一个线程或者说会阻塞于epoll_wait （而这个又是事件驱动模式）
+
+6.心得体会
+	a.C需要用指针。体现在1.函数间的调用传参 2.结构之间的封装包含引用
+	b.client可以是浏览器 迅雷等 也可一是ab wget curl等
+	
+7.模块分析
+	a.日志模块
+		1.使用chdir()的必要性：因为程序执行过程可能会改变进程当前目录(多进程 或者 chdir函数调用)
+		2.日志模块出现有时候不在指定目录下输出日志。(待解决)
+
+
+8.框架结构分析
+
+	a.自己对框架架构有点一头雾水的感觉。 这个和nigix不一样
+		nginx: 根目录：
+			 目录：src confg 
+			 文件：LICENSE  configure 
+			 文档：README
+			 等
+		目录src: 
+			目录：misc
+				module ?
+			目录：core
+				数据结构 list hash tree array string queue 
+				功能： md5 configcore alloc regex buf connection 等
+				其他:
+
+			目录：os
+				目录 unix:
+					系统相关的*.h *.c: process linux recv send file daemon
+										shmem time user thread fork 
+			目录：mail
+				mail功能文件 *.h *.c: smtp parse proxy ssl pop3 imap等
+				注：感觉这个像我们任务业务逻辑
+			目录：http
+				http相关*.c *.h :config lock file_cache parse request
+								 body header 等
+				http业务逻辑（和mail等价）
+			目录：event
+				event相关：connec pipe posted openssl event 
+
+总结：
+1.src 下面core里是框架和一些工具， http mail是业务逻辑 其他os event module 是模块。
+2.下一个版本重新架构。现在专心做最要紧的部分
+3.新的任务很强势的来了。简直只能靠释放洪荒之力来博一把
+	a.下一个版本后推 
+	b.未完成参见http_lib里的readme	
+
+
+4.爆漏最大的问题是：自己对事情的态度问题。以前以为自己比较认真。可才发现连一般都算不上 在代码和设计 思考等很多方面 自己的惰性。例如 一些代码细节不愿意更好的质量 像快 垃圾 妥协 从vim等工具的使用上等等。  自己的惰性已经让自己养成不好的习惯。 结合自控力这本书任重道远。
+另外自己有很多方面需要向别人学习  liu and chen 等等  对待问题的态度 解决方式 思维方式 以及说话 表达能力等等  。 cheer on!!! 牢记自己想要的。弄清出哪个是真正的自己
+
+5.liu好多细节都值得学习。关键不是学习那些最后的细节。而是明白为什么同样的事 同样的细节他做的更好。例如 日志：日志文件命名 一天一个日志 回滚 写入日志的格式  全英提示等  关键是自己的习惯和态度 和 能力。
